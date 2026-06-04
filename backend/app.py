@@ -34,7 +34,7 @@ from resume_builder import generate_corrected_resume
 app = Flask(__name__)
 CORS(app)
 
-app.config["SECRET_KEY"] = "ai-resume-analyzer-secret-key-2024"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "ai-resume-analyzer-secret-key-2024")
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5 MB max upload
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -536,7 +536,10 @@ def internal_error(e):
 # ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
+    host = os.environ.get("HOST", "127.0.0.1")
+    port = int(os.environ.get("PORT", 5000))
+    debug_mode = os.environ.get("FLASK_ENV") == "development"
     print("\n=== AI Resume Analyzer Backend ===")
-    print("Server running at http://localhost:5000")
+    print(f"Server running at http://{host}:{port}")
     print("Admin: admin@resumeanalyzer.com / admin123\n")
-    app.run(debug=True, port=5000)
+    app.run(debug=debug_mode, host=host, port=port)

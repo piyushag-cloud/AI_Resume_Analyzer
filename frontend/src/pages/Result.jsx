@@ -89,7 +89,7 @@ export default function Result() {
   const handleAddText = async (e) => {
     e.preventDefault();
     if (!addText.trim()) return;
-    
+
     setAddingText(true);
     setAddSuccess("");
     try {
@@ -183,8 +183,8 @@ export default function Result() {
           >
             {downloadingDocx ? "Downloading..." : "📄 Download ATS Template"}
           </button>
-          <button 
-            className="btn btn-secondary" 
+          <button
+            className="btn btn-secondary"
             onClick={() => setShowAddForm(!showAddForm)}
           >
             {showAddForm ? "✕ Cancel Add" : "➕ Add to Resume"}
@@ -204,7 +204,7 @@ export default function Result() {
               <span style={{ fontSize: "1.3rem" }}>📝</span> Append Missing Information
             </h3>
             <p style={{ color: "var(--text-secondary)", fontSize: "0.95rem", marginBottom: "1rem" }}>
-              Type exactly as you want it to appear (e.g. <b>PROJECTS</b> followed by your project details). 
+              Type exactly as you want it to appear (e.g. <b>PROJECTS</b> followed by your project details).
               This will be appended to your resume before the <b>ATS Template</b> is generated.
             </p>
             {addSuccess && <div className="auth-success" style={{ marginBottom: "1rem", padding: "0.75rem", borderRadius: "8px" }}>{addSuccess}</div>}

@@ -38,7 +38,11 @@ export default function AdminLogin() {
       localStorage.removeItem("user");
       navigate("/admin/dashboard");
     } catch (err) {
-      setError(err.response?.data?.error || "Admin login failed.");
+      if (!err.response) {
+        setError("Cannot connect to the backend server. Please make sure the Flask server is running at http://127.0.0.1:5000.");
+      } else {
+        setError(err.response.data?.error || "Admin login failed.");
+      }
     } finally {
       setLoading(false);
     }

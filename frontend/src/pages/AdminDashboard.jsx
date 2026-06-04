@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000/api";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
