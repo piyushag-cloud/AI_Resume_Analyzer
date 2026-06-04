@@ -35,7 +35,8 @@ app = Flask(__name__)
 CORS(app, resources={
     r"/*": {
         "origins": [
-            "https://ai-resume-analyzer-j52ld7fa2-piyush-project2.vercel.app"
+            "https://ai-resume-analyzer-j52ld7fa2-piyush-project2.vercel.app",
+            "https://https://ai-resume-analyzer-tawny-seven.vercel.app/"
         ],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
