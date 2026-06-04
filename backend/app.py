@@ -32,7 +32,15 @@ from resume_builder import generate_corrected_resume
 # ═══════════════════════════════════════════════════════════════
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/*": {
+        "origins": [
+            "https://ai-resume-analyzer-j52ld7fa2-piyush-project2.vercel.app"
+        ],
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"]
+    }
+})
 
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "ai-resume-analyzer-secret-key-2024")
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5 MB max upload
