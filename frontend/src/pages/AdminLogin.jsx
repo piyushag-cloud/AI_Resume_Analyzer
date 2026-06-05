@@ -39,7 +39,7 @@ export default function AdminLogin() {
       navigate("/admin/dashboard");
     } catch (err) {
       if (!err.response) {
-        setError("Cannot connect to the backend server. Please make sure the Flask server is running at http://127.0.0.1:5000.");
+        setError("Cannot connect to the backend server. Please make sure the Flask server is running at https://ai-resume-analyzer-mduy.onrender.com");
       } else {
         setError(err.response.data?.error || "Admin login failed.");
       }
