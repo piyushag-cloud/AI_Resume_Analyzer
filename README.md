@@ -1,6 +1,14 @@
-# AI Resume Analyzer
+# Project Details: AI Resume Analyzer
 
 A comprehensive full-stack web application that allows users to upload their resumes (PDF/DOCX), select a target job role, and receive an intelligent analysis including an ATS score, skill gap detection, formatting checks, and spelling suggestions.
+
+## Live Demo
+
+🔗 Live Website: https://ai-resume-analyzer-tawny-seven.vercel.app
+
+## Repository
+
+GitHub: https://github.com/piyushag-cloud/AI_Resume_Analyzer
 
 ## Features
 - **User Authentication**: Secure signup and login system.
@@ -76,7 +84,7 @@ AI-Resume-Analyzer/
    ```bash
    npm run dev
    ```
-   The frontend will run at the URL provided by Vite (usually `http://localhost:5173`).
+   The frontend will run at the URL provided by Vite (usually `http://localhost:5173`).  
 
 ## API Endpoints
 
