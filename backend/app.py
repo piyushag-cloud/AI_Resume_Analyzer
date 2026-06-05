@@ -33,7 +33,23 @@ from resume_builder import generate_corrected_resume
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": "*"}})
+# CORS headers for Vercel frontend → Render backend
+@app.before_request
+def handle_preflight():
+    if request.method == "OPTIONS":
+        response = jsonify({"status": "ok"})
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        return response, 200
+
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    return response
 
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "ai-resume-analyzer-secret-key-2024")
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5 MB max upload
@@ -127,10 +143,13 @@ def admin_required(f):
 #  AUTH ENDPOINTS
 # ═══════════════════════════════════════════════════════════════
 
-@app.route("/api/signup", methods=["POST"])
+@app.route("/signup", methods=["POST", "OPTIONS"])
 def signup():
-    """Register a new user."""
-    data = request.get_json()
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
+
+    data = request.get_json(silent=True) or {}
+
     name = data.get("name", "").strip()
     email = data.get("email", "").strip().lower()
     password = data.get("password", "")
@@ -151,14 +170,22 @@ def signup():
     return jsonify({
         "message": "Account created successfully.",
         "token": token,
-        "user": {"id": user_id, "name": name, "email": email, "role": "user"},
+        "user": {
+            "id": user_id,
+            "name": name,
+            "email": email,
+            "role": "user"
+        },
     }), 201
 
 
-@app.route("/api/login", methods=["POST"])
+@app.route("/login", methods=["POST", "OPTIONS"])
 def login():
-    """Authenticate a user and return a token."""
-    data = request.get_json()
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
+
+    data = request.get_json(silent=True) or {}
+
     email = data.get("email", "").strip().lower()
     password = data.get("password", "")
 
@@ -170,6 +197,7 @@ def login():
         return jsonify({"error": "Invalid email or password."}), 401
 
     token = create_token(user["id"], user["role"])
+
     return jsonify({
         "message": "Login successful.",
         "token": token,

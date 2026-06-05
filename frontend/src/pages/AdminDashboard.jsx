@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
 
-const API_BASE = import.meta.env.VITE_API_URL || "https://ai-resume-analyzer-mduy.onrender.com";
+const rawApiUrl = import.meta.env.VITE_API_URL || "https://ai-resume-analyzer-mduy.onrender.com";
+const API_BASE = rawApiUrl.endsWith("/api") ? rawApiUrl : `${rawApiUrl.replace(/\/$/, "")}/api`;
 
 export default function AdminDashboard() {
   const navigate = useNavigate();

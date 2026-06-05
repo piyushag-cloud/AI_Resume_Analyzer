@@ -24,6 +24,9 @@ def apply_spelling_corrections(text: str, suggestions: list) -> str:
         return text
     for sug in suggestions:
         match = re.search(r"Misspelled '(.+?)'\. Did you mean '(.+?)'\?", sug)
+        if not match:
+            # Fallback to match format "'word' → 'correct'" or "'word' -> 'correct'"
+            match = re.search(r"'(.+?)'\s*(?:→|->)\s*'(.+?)'", sug)
         if match:
             wrong, right = match.groups()
             text = re.sub(r'\b' + re.escape(wrong) + r'\b', right, text, flags=re.IGNORECASE)
