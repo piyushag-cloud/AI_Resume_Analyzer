@@ -143,6 +143,7 @@ def admin_required(f):
 #  AUTH ENDPOINTS
 # ═══════════════════════════════════════════════════════════════
 
+@app.route("/api/signup", methods=["POST", "OPTIONS"])
 @app.route("/signup", methods=["POST", "OPTIONS"])
 def signup():
     if request.method == "OPTIONS":
@@ -179,6 +180,7 @@ def signup():
     }), 201
 
 
+@app.route("/api/login", methods=["POST", "OPTIONS"])
 @app.route("/login", methods=["POST", "OPTIONS"])
 def login():
     if request.method == "OPTIONS":
